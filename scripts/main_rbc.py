@@ -31,22 +31,36 @@ class CustomRBC(BasicRBC):
 
                 if 'electrical_storage' in n:
                     for hour in Building.get_periodic_observation_metadata()['hour']:
-                        # TODO: Implement RBC policy
-
+                        
+                        if 0 <= hour < 6:
+                            value = 0.8
+                        elif 6 <= hour < 9:
+                            value = -0.4
+                        elif 12 <= hour < 18:
+                            value = -0.7    
+                        else:
+                            value = 0.0    
+                        
                         action_map[n][hour] = value
                 
                 elif n == 'dhw_storage':
                     for hour in Building.get_periodic_observation_metadata()['hour']:
-                        # TODO: Implement RBC policy
+                        
+                        if 12 <= hour < 17:
+                            value = 0.8    
+                        else:
+                            value = 0.0
 
                         action_map[n][hour] = value
 
                 elif n == 'cooling_device':
                     for hour in Building.get_periodic_observation_metadata()['hour']:
-                        # TODO: Implement RBC policy
 
+                        if 12 <= hour < 17:
+                            value = 0.8   
+                        else:
+                            value = 0.0
                         action_map[n][hour] = value
-                
                 else:
                     raise ValueError(f'Unknown action name: {n}')
                 
@@ -61,7 +75,6 @@ def run_simulation(agent, env):
     for _ in range(max_steps):
         actions = agent.predict(observations)
         observations, reward, terminated, truncated, info = env.step(actions)
-
     print("Simulation completed.")
 
 def main(args):
