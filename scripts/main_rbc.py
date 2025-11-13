@@ -37,7 +37,9 @@ class CustomRBC(BasicRBC):
                         elif 6 <= hour < 9:
                             value = -0.4
                         elif 12 <= hour < 18:
-                            value = -0.7    
+                            value = -0.6
+                        elif 19 < hour < 22:
+                            value = -0.4 
                         else:
                             value = 0.0    
                         
@@ -46,8 +48,14 @@ class CustomRBC(BasicRBC):
                 elif n == 'dhw_storage':
                     for hour in Building.get_periodic_observation_metadata()['hour']:
                         
-                        if 12 <= hour < 17:
-                            value = 0.8    
+                        if 4 <= hour < 6:
+                            value = 0.3
+                        elif  7 < hour < 9:
+                            value = 0.6
+                        elif 12 <= hour < 17:
+                            value = 0.3
+                        elif  19 < hour < 21:
+                            value = 0.6     
                         else:
                             value = 0.0
 
@@ -57,7 +65,7 @@ class CustomRBC(BasicRBC):
                     for hour in Building.get_periodic_observation_metadata()['hour']:
 
                         if 12 <= hour < 17:
-                            value = 0.8   
+                            value = 0.7   
                         else:
                             value = 0.0
                         action_map[n][hour] = value
@@ -106,3 +114,6 @@ if __name__ == '__main__':
     args = conf.args
 
     main(args)
+
+
+
