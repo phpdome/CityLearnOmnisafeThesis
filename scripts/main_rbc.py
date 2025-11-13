@@ -63,9 +63,11 @@ class CustomRBC(BasicRBC):
 
                 elif n == 'cooling_device':
                     for hour in Building.get_periodic_observation_metadata()['hour']:
-
-                        if 12 <= hour < 17:
+                        
+                        if 12 <= hour < 15:
                             value = 0.7   
+                        elif 15 <= hour < 18:
+                            value = 0.4
                         else:
                             value = 0.0
                         action_map[n][hour] = value
